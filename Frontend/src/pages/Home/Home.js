@@ -14,14 +14,24 @@ function Home() {
   }, []);
 
   return (
-    <div className="Home">
+    <div>
       <Header />
-      <h1>Page d'accueil</h1>
-      <ul>
-        {posts.map((post) => {
-          return <li key={post.id}>{post.title}</li>;
-        })}
-      </ul>
+      <div className="Home">
+        <div className="title_container">
+          <h1 className="title">Derniers posts publiés !</h1>
+        </div>
+        <ul className="nav_ul">
+          {posts.map((post) => {
+            return (
+              <li key={post.id} className="nav_li">
+                {post.title}
+                <i className="fa-regular fa-thumbs-up"></i>
+                <i className="fa-regular fa-thumbs-down"></i>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

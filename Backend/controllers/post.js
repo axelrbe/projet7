@@ -5,23 +5,21 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.createPost = (req, res, next) => {
-  let imagePost = "";
-  if (req.file) {
-    imagePost = `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`;
-  }
   const post = new Post({
-    UserId: req.body.UserId,
-    posts: req.body.post,
-    postUrl: imagePost,
+    likes: 0,
+    dislikes: 0,
+    usersLiked: [],
+    usersDislike: [],
   });
-  console.log(message);
+
   post
     .save()
-    .then(() => res.status(201).json({ message: "Publication réussie" }))
-    .catch((error) => res.status(400).json({ error }));
-  //}
+    .then(() => {
+      res.status(201).json({ message: "post enregistré !" });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
 };
 // Retrieve all Tutorials from the database.
 exports.readAll = async (req, res) => {

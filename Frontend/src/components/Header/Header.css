@@ -1,8 +1,21 @@
+body {
+  font-family: "Lato", sans-serif;
+}
+
 .Header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #fd2d01;
+  align-items: center;
+  background-color: #990011ff;
+  height: 150px;
+}
+
+.logo {
+  width: 300px;
+  object-fit: cover;
+  padding: 10px;
+  margin-left: 50px;
 }
 
 .nav_link {
@@ -16,7 +29,17 @@
   margin-right: 20px;
 }
 
-Link {
-  color: #4e5166;
+.link {
   text-decoration: none;
+  color: #fcf6f5ff;
+  font-size: 1.6em;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.link:hover {
+  box-shadow: inset 600px 0 0 0 #101820ff;
+  color: white;
+  border-radius: 15px;
+  padding: 0 15px 5px 15px;
 }
