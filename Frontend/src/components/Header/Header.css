@@ -1,0 +1,22 @@
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fd2d01;
+}
+
+.nav_link {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+.links {
+  padding: 10px;
+  margin-right: 20px;
+}
+
+Link {
+  color: #4e5166;
+  text-decoration: none;
+}
