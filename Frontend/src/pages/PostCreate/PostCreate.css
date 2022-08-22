@@ -28,13 +28,21 @@ body {
 }
 
 .form {
-  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .input {
+  width: 500px;
+  padding: 10px;
+  border: 3px solid #990011ff;
+  border-radius: 15px;
+}
+
+.textarea {
   width: 400px;
   height: 400px;
   border: 3px solid #990011ff;
@@ -43,13 +51,10 @@ body {
   color: #990011ff;
   font-size: 1.4em;
   font-weight: bold;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .btn {
-  position: absolute;
-  right: 0;
-  bottom: 0;
   border-radius: 15px;
   border: 3px solid #101820ff;
   padding: 10px;
@@ -57,4 +62,12 @@ body {
   color: #ffd7d7;
   font-size: 1.3em;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.btn:hover {
+  box-shadow: inset 600px 0 0 0 #101820ff;
+  color: white;
+  border-radius: 15px;
 }

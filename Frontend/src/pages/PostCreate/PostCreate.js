@@ -37,8 +37,10 @@ function PostCreate() {
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-            <form onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
               <input
+                className="input"
+                placeholder="Ecrivez un titre ici..."
                 type="text"
                 name="title"
                 onChange={handleChange}
@@ -46,12 +48,14 @@ function PostCreate() {
               />
               {errors.title}
               <textarea
+                className="textarea"
+                placeholder="Ecrivez votre commentaire ici..."
                 name="description"
                 onChange={handleChange}
                 value={values.description}
               ></textarea>
               {errors.description}
-              <button type="submit" disabled={isSubmitting}>
+              <button className="btn" type="submit" disabled={isSubmitting}>
                 Envoyer
               </button>
             </form>

@@ -1,15 +1,16 @@
 import "./Signup.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { Formik } from "formik";
-// import { useState } from "react";
+import LoginSignup from "../../components/LoginSignup/LoginSignup";
 
 function Signup() {
-  // const [posts, setPosts] = useState([]);
-
   return (
     <div>
+      <LoginSignup />
       <div className="Signup">
+        <div className="title_container">
+          <h1>Connectez-vous !</h1>
+        </div>
         <Formik
           initialValues={{ email: "", password: "", pseudo: "" }}
           validate={(values) => {
@@ -38,8 +39,10 @@ function Signup() {
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-            <form onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
               <input
+                className="input"
+                placeholder="Créer votre pseudo ici..."
                 type="text"
                 name="pseudo"
                 onChange={handleChange}
@@ -47,6 +50,8 @@ function Signup() {
               />
               {errors.pseudo}
               <input
+                className="input"
+                placeholder="Renseigner votre email ici..."
                 type="email"
                 name="email"
                 onChange={handleChange}
@@ -54,21 +59,20 @@ function Signup() {
               />
               {errors.email}
               <input
+                className="input"
+                placeholder="Renseigner votre mot de passe ici..."
                 type="password"
                 name="password"
                 onChange={handleChange}
                 value={values.password}
               />
               {errors.password}
-              <button type="submit" disabled={isSubmitting}>
+              <button className="btn" type="submit" disabled={isSubmitting}>
                 Se connecter
               </button>
             </form>
           )}
         </Formik>
-        <Link to="/inscription" className="link">
-          S'inscrire
-        </Link>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Formik } from "formik";
+import LoginSignup from "../../components/LoginSignup/LoginSignup";
 
 // import { useState } from "react";
 
@@ -10,7 +11,11 @@ function Login() {
   const navigate = useNavigate();
   return (
     <div>
+      <LoginSignup />
       <div className="Login">
+        <div className="title_container">
+          <h1>Connectez-vous !</h1>
+        </div>
         <Formik
           initialValues={{ email: "", password: "" }}
           validate={(values) => {
@@ -38,8 +43,10 @@ function Login() {
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-            <form onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
               <input
+                className="input"
+                placeholder="Renseigner votre email ici..."
                 type="email"
                 name="email"
                 onChange={handleChange}
@@ -47,21 +54,20 @@ function Login() {
               />
               {errors.email}
               <input
+                className="input"
+                placeholder="Renseigner votre mot de passe ici..."
                 type="password"
                 name="password"
                 onChange={handleChange}
                 value={values.password}
               />
               {errors.password}
-              <button type="submit" disabled={isSubmitting}>
+              <button className="btn" type="submit" disabled={isSubmitting}>
                 Se connecter
               </button>
             </form>
           )}
         </Formik>
-        <Link to="/inscription" className="link">
-          S'inscrire
-        </Link>
       </div>
     </div>
   );
