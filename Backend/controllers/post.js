@@ -1,19 +1,20 @@
-const { posts } = require("../models");
 const db = require("../models");
 const Post = db.posts;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.createPost = (req, res, next) => {
-  const post = new Post({
-    likes: 0,
-    dislikes: 0,
-    usersLiked: [],
-    usersDislike: [],
-  });
-
-  post
-    .save()
+  let imagePost = "";
+  if (req.file) {
+    imagePost = `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`;
+  }
+  console.log(req.body.description, req.body);
+  Post.create({
+    title: req.body.title,
+    description: req.body.description,
+  })
     .then(() => {
       res.status(201).json({ message: "post enregistré !" });
     })
