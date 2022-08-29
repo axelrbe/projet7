@@ -34,11 +34,12 @@ body {
   color: #fcf6f5ff;
   font-size: 1.6em;
   font-weight: bold;
-  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .link:hover {
-  box-shadow: inset 600px 0 0 0 #101820ff;
-  color: white;
+  background-color: #fff;
+  padding: 10px;
+  color: #101820ff;
   border-radius: 15px;
 }

@@ -34,17 +34,26 @@ body {
   color: #fff;
 }
 
-i {
+.icons_container {
   position: absolute;
   right: 10px;
   bottom: 10px;
   margin: 10px;
 }
 
-.fa-thumbs-up {
-  padding-right: 40px;
+i {
+  padding: 0 10px;
 }
 
-.fa-thumbs-down {
-  padding-left: 40px;
+.delete_btn {
+  border: none;
+  background-color: transparent;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+}
+
+.delete_btn:hover {
+  color: white;
+  border-radius: 100px;
 }
