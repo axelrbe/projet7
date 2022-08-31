@@ -1,20 +1,46 @@
-import "./Header.css";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo3 from "../../images/logo3.png";
+import "./Header.css";
 
 const Header = () => {
+  const [checkWidth, setCheckWidth] = useState(window.innerWidth);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    setCheckWidth(window.innerWidth);
+  };
+
+  const openNav = () => {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleClick);
+
+    return () => {
+      window.removeEventListener("resize", handleClick);
+    };
+  }, []);
+
   return (
     <header className="Header">
-      <img src={logo3} alt="logo" className="logo" />
+      <img src={logo3} alt="logo" className="header__logo" />
       <nav>
-        <ul className="nav_link">
-          <li className="links">
-            <Link to="/accueil" className="link">
+        {checkWidth < 768 && (
+          <button className="floating__btn" onClick={openNav}>
+            <i className="fa-solid fa-list"></i>
+          </button>
+        )}
+        <ul className={`header__links ${isOpen ? "active" : ""}`}>
+          {/* <button className="closing__btn" onClick={openNav}></button> */}
+          <li className="header__li">
+            <Link to="/accueil" className="header__link">
               Accueil
             </Link>
           </li>
-          <li className="links">
-            <Link to="/ajout-article" className="link">
+          <li className="header__li">
+            <Link to="/ajout-article" className="header__link">
               Ajouter un article
             </Link>
           </li>

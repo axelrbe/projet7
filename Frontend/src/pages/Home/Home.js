@@ -2,6 +2,7 @@ import Header from "../../components/Header/Header";
 import "./Home.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import LikeDislike from "../../components/LikeDislike/LikeDislike";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -14,11 +15,16 @@ function Home() {
       });
   }, []);
 
-  const handleRemove = (id) => {
-    axios.delete(`http://localhost:3001/api/posts/${id}`).then(() => {
-      const newList = posts.filter((item) => item.id !== id);
-      setPosts(newList);
-    });
+  useEffect((id) => {
+    axios
+      .delete(`http://localhost:3001/api/posts/`, { params: { id: { id } } })
+      .then((res) => res.json())
+      .catch((err) => err.response.data);
+  });
+
+  const handleDelete = (id) => {
+    const newList = posts.filter((item) => item.id !== id);
+    setPosts(newList);
   };
 
   return (
@@ -32,13 +38,14 @@ function Home() {
           {posts.map((post) => {
             return (
               <li key={post.id} className="nav_li">
-                {post.title} : {post.description}
+                <span className="post">
+                  {post.title} : {post.description}
+                </span>
                 <div className="icons_container">
-                  <i className="fa-regular fa-thumbs-up"></i>
-                  <i className="fa-regular fa-thumbs-down"></i>
+                  <LikeDislike />
                   <button
                     className="delete_btn"
-                    onClick={() => handleRemove(post.id)}
+                    onClick={() => handleDelete(post.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>

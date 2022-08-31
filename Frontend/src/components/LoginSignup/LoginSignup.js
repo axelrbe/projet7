@@ -4,17 +4,17 @@ import logo3 from "../../images/logo3.png";
 
 const LoginSignup = () => {
   return (
-    <header className="Header">
-      <img src={logo3} alt="logo" className="logo" />
+    <header className="login__header">
+      <img src={logo3} alt="logo" className="login__logo" />
       <nav>
-        <ul className="nav_link">
-          <li className="links">
-            <Link to="/" className="link">
+        <ul className="login__links">
+          <li className="login__li">
+            <Link to="/" className="login__link">
               Connexion
             </Link>
           </li>
-          <li className="links">
-            <Link to="/inscription" className="link">
+          <li className="login__li">
+            <Link to="/inscription" className="login__link">
               Inscription
             </Link>
           </li>
