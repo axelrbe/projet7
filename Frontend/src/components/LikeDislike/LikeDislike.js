@@ -1,43 +1,31 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./LikeDislike.css";
+import JwtService from "../../services/JwtService";
 
-const LikeDislike = () => {
-  const [like, setLike] = useState(0);
-  const [dislike, setDislike] = useState(0);
-
+const LikeDislike = ({ postId, _likes }) => {
+  const [likes, setLikes] = useState(0);
   const [likeActive, setLikeActive] = useState(false);
-  const [dislikeActive, setDislikeActive] = useState(false);
+
+  useEffect(() => {
+    console.log(_likes);
+    setLikes(_likes);
+  }, []);
 
   const likePost = () => {
-    if (likeActive) {
-      setLikeActive(false);
-      setLike(like - 1);
-    } else {
-      setLikeActive(true);
-      setLike(like + 1);
-
-      if (dislikeActive) {
-        setDislikeActive(false);
-        setLike(like + 1);
-        setDislike(dislike - 1);
-      }
-    }
-  };
-
-  const dislikePost = () => {
-    if (dislikeActive) {
-      setDislikeActive(false);
-      setDislike(dislike - 1);
-    } else {
-      setDislikeActive(true);
-      setDislike(dislike + 1);
-
-      if (likeActive) {
-        setLikeActive(false);
-        setDislike(dislike + 1);
-        setLike(like - 1);
-      }
-    }
+    const userId = JwtService.getTokenDecrypted().userId;
+    axios
+      .post(`http://localhost:3001/api/posts/${postId}/like`, { userId })
+      .then((res) => {
+        if (res.data.action === "added") {
+          setLikeActive(true);
+          setLikes(likes + 1);
+        } else {
+          setLikeActive(false);
+          setLikes(likes - 1);
+        }
+      })
+      .catch((err) => err.response.data);
   };
 
   return (
@@ -47,13 +35,7 @@ const LikeDislike = () => {
         className={`like__btn ${likeActive ? "likeIsActive" : ""}`}
         onClick={likePost}
       >
-        <i className="fa-regular fa-thumbs-up" /> {like}
-      </button>
-      <button
-        className={`dislike__btn ${dislikeActive ? "dislikeIsActive" : ""}`}
-        onClick={dislikePost}
-      >
-        <i className="fa-regular fa-thumbs-down" /> {dislike}
+        <i className="fa-regular fa-thumbs-up" /> {likes}
       </button>
     </div>
   );

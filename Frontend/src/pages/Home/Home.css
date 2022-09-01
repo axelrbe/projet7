@@ -6,6 +6,23 @@
   overflow: hidden;
 }
 
+.title_container {
+  width: 62%;
+  height: 100px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  margin: 20px;
+}
+
+.title {
+  color: #101820ff;
+  padding: 20px;
+  font-size: 2.5em;
+}
+
 .nav_ul {
   list-style-type: none;
   width: 90%;
@@ -17,13 +34,13 @@
 .nav_li {
   color: #fff;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
   color: #101820ff;
   font-size: 1.4em;
   font-weight: bold;
   border: 3px solid #990011ff;
   border-radius: 15px;
-  margin: 10px;
+  margin: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   position: relative;
@@ -43,7 +60,7 @@
 .delete_btn {
   position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: -8px;
   margin: 10px;
   border: none;
   background-color: transparent;

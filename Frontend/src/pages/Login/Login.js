@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Formik } from "formik";
 import LoginSignup from "../../components/LoginSignup/LoginSignup";
-
-// import { useState } from "react";
+import JwtService from "../../services/JwtService";
 
 function Login() {
-  // const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   return (
     <div>
@@ -32,7 +30,8 @@ function Login() {
             axios
               .post("http://localhost:3001/api/auth/login", user)
               .then(function (response) {
-                console.log(response);
+                console.log(response.data.token);
+                JwtService.setToken(response.data.token);
                 navigate("/accueil");
                 setSubmitting(false);
               })

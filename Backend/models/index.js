@@ -8,12 +8,29 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
     acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
+    idle: dbConfig.pool.idle,
+  },
 });
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.users = require("./user.js")(sequelize, Sequelize);
 db.posts = require("./post.js")(sequelize, Sequelize);
+db.postLikes = require("./postLike.js")(sequelize, Sequelize);
+
+db.users.hasOne(db.posts, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.posts.hasOne(db.postLikes, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+db.users.hasOne(db.postLikes, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
 module.exports = db;

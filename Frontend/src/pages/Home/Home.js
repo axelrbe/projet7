@@ -15,14 +15,12 @@ function Home() {
       });
   }, []);
 
-  useEffect((id) => {
-    axios
-      .delete(`http://localhost:3001/api/posts/`, { params: { id: { id } } })
-      .then((res) => res.json())
-      .catch((err) => err.response.data);
-  });
-
   const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3001/api/posts/`, { params: { id: id } })
+      .then((res) => console.log(res.data))
+      .catch((err) => err.response.data);
+
     const newList = posts.filter((item) => item.id !== id);
     setPosts(newList);
   };
@@ -32,17 +30,17 @@ function Home() {
       <Header />
       <div className="Home">
         <div className="title_container">
-          <h1 className="title">Derniers posts publiés !</h1>
+          <h1 className="title">Liste des posts !</h1>
         </div>
         <ul className="nav_ul">
           {posts.map((post) => {
             return (
               <li key={post.id} className="nav_li">
-                <span className="post">
+                <p className="post">
                   {post.title} : {post.description}
-                </span>
+                </p>
                 <div className="icons_container">
-                  <LikeDislike />
+                  <LikeDislike postId={post.id} _likes={post.likes} />
                   <button
                     className="delete_btn"
                     onClick={() => handleDelete(post.id)}
