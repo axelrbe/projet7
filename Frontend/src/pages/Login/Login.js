@@ -11,7 +11,7 @@ function Login() {
     <div>
       <LoginSignup />
       <div className="Login">
-        <div className="title_container">
+        <div className="title__container">
           <h1>Connectez-vous !</h1>
         </div>
         <Formik

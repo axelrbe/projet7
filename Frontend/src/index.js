@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PostCreate from "./pages/PostCreate/PostCreate";
 import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
+import PostUpdate from "./components/PostUpdate/PostUpdate";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +14,7 @@ root.render(
     <Routes>
       <Route path="/accueil" element={<Home />} />
       <Route path="/ajout-article" element={<PostCreate />} />
+      <Route path="/modifier-article/:id" element={<PostUpdate />} />
       <Route path="/inscription" element={<Signup />} />
       <Route path="/" element={<Login />} />
     </Routes>

@@ -16,6 +16,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .input {
@@ -53,4 +56,17 @@ body {
   box-shadow: inset 600px 0 0 0 #101820ff;
   color: white;
   border-radius: 15px;
+}
+
+.post__img {
+  margin: 10px;
+  color: #111;
+  background-color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: 3px solid #990011ff;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }

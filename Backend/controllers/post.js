@@ -12,6 +12,7 @@ exports.createPost = (req, res, next) => {
   Post.create({
     title: req.body.title,
     description: req.body.description,
+    imageUrl: imagePost,
   })
     .then(() => {
       res.status(201).json({ message: "post enregistré !" });
@@ -29,6 +30,7 @@ exports.readAll = async (req, res) => {
         "title",
         "description",
         "likes",
+        "imageUrl",
         "createdAt",
         "updatedAt",
       ],
@@ -39,26 +41,64 @@ exports.readAll = async (req, res) => {
   }
 };
 
-exports.findOne = (req, res) => {};
-
-exports.update = (req, res) => {};
-
-exports.deletePost = (req, res) => {
-  Post.findOne({ where: { id: req.params.id } })
-    .then((post) => {
-      if (post.userId != req.auth.userId) {
-        res.status(401).json({ message: "Not authorized" });
-      } else {
-        Post.destroy({ where: { id: req.params.id } })
-          .then(() => {
-            res.status(200).json({ message: "Post supprimé !" });
-          })
-          .catch((error) => res.status(401).json({ error }));
-      }
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
+exports.readOne = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const post = await Post.findOne({
+      where: { id },
     });
+    return res.status(200).json({ data: post });
+  } catch (err) {
+    return res.status(501).json({ err });
+  }
+};
+
+exports.update = async (req, res) => {
+  const id = req.params.id;
+  const postModified = {
+    title: req.body.title,
+    description: req.body.description,
+  };
+  if (req.file) {
+    postModified.imageUrl = `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`;
+  }
+  const post = await Post.findOne({
+    where: { id },
+  });
+  // if (post.userId != req.auth.userId) {
+  //   res.status(401).json({ message: "Not authorized" });
+  // } else
+  if (req.file && post.imageUrl) {
+    const imgUrl = post.imageUrl.split("/images/")[1];
+    fs.unlink(`images/${imgUrl}`, () => {
+      post
+        .update({ postModified })
+        .then(() => res.status(200).json({ message: "Post modifié!" }))
+        .catch((error) => res.status(401).json({ error }));
+    });
+  } else {
+    post
+      .update({ postModified })
+      .then(() => res.status(200).json({ message: "Post modifié!" }))
+      .catch((error) => res.status(401).json({ error }));
+  }
+};
+
+exports.deletePost = async (req, res) => {
+  const userId = req.body.userId;
+  const postId = req.params.id;
+  let PostDeleted;
+
+  const post = await Post.findOne({ where: { id: postId } });
+  if (userId != req.auth.userId) {
+    res.status(401).json({ message: "Not authorized" });
+    PostDeleted = false;
+  } else {
+    post.destroy({ where: { userId, postId } });
+    PostDeleted = true;
+  }
 };
 
 exports.likePost = async (req, res, next) => {

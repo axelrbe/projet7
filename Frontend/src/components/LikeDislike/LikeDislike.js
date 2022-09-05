@@ -8,14 +8,13 @@ const LikeDislike = ({ postId, _likes }) => {
   const [likeActive, setLikeActive] = useState(false);
 
   useEffect(() => {
-    console.log(_likes);
     setLikes(_likes);
-  }, []);
+  }, [_likes]);
 
   const likePost = () => {
     const userId = JwtService.getTokenDecrypted().userId;
     axios
-      .post(`http://localhost:3001/api/posts/${postId}/like`, { userId })
+      .post(`http://localhost:3001/api/posts/like/${postId}`, { userId })
       .then((res) => {
         if (res.data.action === "added") {
           setLikeActive(true);

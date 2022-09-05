@@ -1,3 +1,17 @@
+.main__noscroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.active {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s linear;
+}
+
 .Home {
   display: flex;
   align-items: center;
@@ -6,7 +20,7 @@
   overflow: hidden;
 }
 
-.title_container {
+.title__container {
   width: 62%;
   height: 100px;
   background-color: #fff;
@@ -23,15 +37,20 @@
   font-size: 2.5em;
 }
 
-.nav_ul {
+.nav__ul {
   list-style-type: none;
   width: 90%;
+  height: 100vh;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.nav_li {
+.nav__li {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  height: 200px;
   color: #fff;
   background-color: #fff;
   padding: 10px;
@@ -46,9 +65,8 @@
   position: relative;
 }
 
-.nav_li:hover {
+.nav__li:hover {
   background-color: #990011ff;
-  color: #fff;
 }
 
 .post {
@@ -57,19 +75,62 @@
   text-overflow: ellipsis;
 }
 
-.delete_btn {
-  position: absolute;
-  right: 10px;
-  bottom: -8px;
-  margin: 10px;
-  border: none;
-  background-color: transparent;
-  font-size: 0.9em;
-  cursor: pointer;
-  transition: color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+.image__post {
+  width: 20%;
+  height: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+  padding-right: 10px;
 }
 
-.delete_btn:hover {
+.modify__icon {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+  padding: 30px;
+}
+
+.modify__icon:hover {
   color: white;
   border-radius: 100px;
+}
+
+.open__post {
+  width: 500px;
+  height: 500px;
+  border: 3px solid #990011ff;
+  border-radius: 15px;
+  background-color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: auto;
+}
+
+.close__btn {
+  position: fixed;
+  right: 0;
+  top: 0;
+  border: none;
+  padding: 10px;
+  background-color: transparent;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #990011ff;
+  cursor: pointer;
+}
+
+.open__post img {
+  width: 300px;
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 1px 1px 6px #111;
 }
