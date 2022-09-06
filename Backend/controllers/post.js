@@ -1,6 +1,7 @@
 const db = require("../models");
 const Post = db.posts;
 const Op = db.Sequelize.Op;
+const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
   let imagePost = "";
@@ -64,6 +65,7 @@ exports.update = async (req, res) => {
       req.file.filename
     }`;
   }
+
   const post = await Post.findOne({
     where: { id },
   });
@@ -73,6 +75,7 @@ exports.update = async (req, res) => {
   if (req.file && post.imageUrl) {
     const imgUrl = post.imageUrl.split("/images/")[1];
     fs.unlink(`images/${imgUrl}`, () => {
+      console.log(imgUrl, postModified.imageUrl);
       post
         .update({ postModified })
         .then(() => res.status(200).json({ message: "Post modifié!" }))

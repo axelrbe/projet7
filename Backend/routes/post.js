@@ -9,6 +9,6 @@ router.post("/", multer, postCtrl.createPost);
 router.delete("/:id", postCtrl.deletePost);
 router.post("/like/:id", postCtrl.likePost);
 router.get("/readOne/:id", postCtrl.readOne);
-router.post("/update/:id", postCtrl.update);
+router.post("/update/:id", multer, postCtrl.update);
 
 module.exports = router;

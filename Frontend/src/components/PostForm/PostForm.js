@@ -26,29 +26,22 @@ const PostForm = ({ postInfo }) => {
           formData.append("title", newPost.title);
           formData.append("description", newPost.description);
           formData.append("image", newPost.file);
-          if (!postInfo.title && !postInfo.description) {
-            axios
-              .post("http://localhost:3001/api/posts/", formData)
-              .then(function (response) {
-                console.log(response);
-                setSubmitting(false);
-              })
-              .catch(function (error) {
-                console.log(error);
-                setSubmitting(false);
-              });
+          let url = "";
+          if (!id) {
+            url = "http://localhost:3001/api/posts/";
           } else {
-            axios
-              .post(`http://localhost:3001/api/posts/update/${id}`, postInfo)
-              .then(function (response) {
-                console.log(response);
-                setSubmitting(false);
-              })
-              .catch(function (error) {
-                console.log(error);
-                setSubmitting(false);
-              });
+            url = `http://localhost:3001/api/posts/update/${id}`;
           }
+          axios
+            .post(url, formData)
+            .then(function (response) {
+              console.log(response);
+              setSubmitting(false);
+            })
+            .catch(function (error) {
+              console.log(error);
+              setSubmitting(false);
+            });
         }}
       >
         {({
