@@ -25,7 +25,6 @@ function Signup() {
             return errors;
           }}
           onSubmit={(user, { setSubmitting }) => {
-            console.log(user);
             axios
               .post("http://localhost:3001/api/auth/signup", user)
               .then(function (response) {

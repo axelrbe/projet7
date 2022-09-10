@@ -44,6 +44,11 @@ const Header = () => {
               Ajouter un article
             </Link>
           </li>
+          <li className="header__li">
+            <Link to="/modifier-profil" className="header__link">
+              <i className="fa-solid fa-user user__profil" />
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

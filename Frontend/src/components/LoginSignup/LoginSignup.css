@@ -62,7 +62,8 @@ body {
   color: #fcf6f5ff;
   font-size: 1.6em;
   font-weight: bold;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, border-radius 0.3s ease-in-out,
+    padding 0.3s ease-in-out;
 }
 
 .login__link:hover {

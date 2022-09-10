@@ -75,9 +75,9 @@ exports.update = async (req, res) => {
   if (req.file && post.imageUrl) {
     const imgUrl = post.imageUrl.split("/images/")[1];
     fs.unlink(`images/${imgUrl}`, () => {
-      console.log(imgUrl, postModified.imageUrl);
+      test(imgUrl, postModified.imageUrl);
       post
-        .update({ postModified })
+        .update(postModified)
         .then(() => res.status(200).json({ message: "Post modifié!" }))
         .catch((error) => res.status(401).json({ error }));
     });
@@ -89,20 +89,7 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.deletePost = async (req, res) => {
-  const userId = req.body.userId;
-  const postId = req.params.id;
-  let PostDeleted;
-
-  const post = await Post.findOne({ where: { id: postId } });
-  if (userId != req.auth.userId) {
-    res.status(401).json({ message: "Not authorized" });
-    PostDeleted = false;
-  } else {
-    post.destroy({ where: { userId, postId } });
-    PostDeleted = true;
-  }
-};
+exports.deletePost = async (req, res) => {};
 
 exports.likePost = async (req, res, next) => {
   const userId = req.body.userId;
@@ -138,4 +125,17 @@ exports.likePost = async (req, res, next) => {
     }
   );
   return res.status(200).json({ message, action });
+};
+
+const test = (a, b, c, d) => {
+  console.log("@@@@@@@@ 1 @@@@@@@@ - ", a);
+  if (b) {
+    console.log("@@@@@@@@ 2 @@@@@@@@ - ", b);
+  }
+  if (c) {
+    console.log("@@@@@@@@ 3 @@@@@@@@ - ", b);
+  }
+  if (d) {
+    console.log("@@@@@@@@ 4 @@@@@@@@ - ", b);
+  }
 };

@@ -60,3 +60,15 @@ exports.login = (req, res, next) => {
       return res.status(502).json({ error });
     });
 };
+const test = (a, b, c, d) => {
+  console.log("@@@@@@@@ 1 @@@@@@@@ - ", a);
+  if (b) {
+    console.log("@@@@@@@@ 2 @@@@@@@@ - ", b);
+  }
+  if (c) {
+    console.log("@@@@@@@@ 3 @@@@@@@@ - ", b);
+  }
+  if (d) {
+    console.log("@@@@@@@@ 4 @@@@@@@@ - ", b);
+  }
+};

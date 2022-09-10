@@ -2,7 +2,6 @@ import Header from "../../components/Header/Header";
 import "./Home.css";
 import { useState, useEffect } from "react";
 import LikeDislike from "../../components/LikeDislike/LikeDislike";
-import Delete from "../../components/Delete/Delete";
 import imagePost from "../../images/post-sans-image.jpg";
 import { Link } from "react-router-dom";
 
@@ -55,7 +54,6 @@ function Home() {
                 </div>
                 <div className="icons__container">
                   <LikeDislike postId={post.id} _likes={post.likes} />
-                  <Delete postId={post.id} post={[post]} />
                   <Link to={"/modifier-article/" + post.id}>
                     <i className="fa-solid fa-pen-to-square modify__icon" />
                   </Link>

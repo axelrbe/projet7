@@ -2,9 +2,12 @@ import { Formik } from "formik";
 import axios from "axios";
 import Thumb from "../Thumb/Thumb";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PostForm = ({ postInfo }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   return (
     <div>
       <Formik
@@ -22,19 +25,28 @@ const PostForm = ({ postInfo }) => {
           return errors;
         }}
         onSubmit={(newPost, { setSubmitting }) => {
-          const formData = new FormData();
+          let formData = new FormData();
           formData.append("title", newPost.title);
           formData.append("description", newPost.description);
           formData.append("image", newPost.file);
           let url = "";
+          let notif = "";
           if (!id) {
             url = "http://localhost:3001/api/posts/";
+            notif = "Votre post a bien été ajouté !";
           } else {
             url = `http://localhost:3001/api/posts/update/${id}`;
+            notif = "Votre post a bien été modifié !";
           }
           axios
             .post(url, formData)
             .then(function (response) {
+              alert(notif);
+              navigate("/accueil");
+              newPost.title = "";
+              newPost.description = "";
+              newPost.file = "";
+              postInfo.imageUrl = "";
               console.log(response);
               setSubmitting(false);
             })

@@ -26,11 +26,9 @@ function Login() {
             return errors;
           }}
           onSubmit={(user, { setSubmitting }) => {
-            console.log(user);
             axios
               .post("http://localhost:3001/api/auth/login", user)
               .then(function (response) {
-                console.log(response.data.token);
                 JwtService.setToken(response.data.token);
                 navigate("/accueil");
                 setSubmitting(false);

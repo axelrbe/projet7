@@ -1,0 +1,41 @@
+.infos__container {
+  width: 500px;
+  height: 500px;
+  margin-top: 30px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.email__container,
+.pseudo__container {
+  border: 3px solid #990011ff;
+  border-radius: 15px;
+  background-color: #fff;
+  color: #111;
+  font-size: 1.7em;
+  font-weight: bold;
+  margin: 20px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.email__container:hover,
+.pseudo__container:hover {
+  background-color: #990011ff;
+  color: #fff;
+}
+
+.email,
+.pseudo {
+  padding: 10px 30px;
+}
+
+.modif__icon {
+  padding: 0 20px;
+}
