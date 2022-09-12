@@ -56,11 +56,46 @@
 }
 
 .modify__area {
-  width: 500px;
+  width: 35%;
   padding: 30px;
   border: 3px solid #990011ff;
   border-radius: 15px;
   background-color: #fff;
   font-size: 1.3em;
   font-weight: bold;
+  display: none;
+  position: relative;
+}
+
+.input__form {
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.input__form:focus {
+  outline: none;
+}
+
+.modify__area.input__active {
+  display: block;
+}
+
+.submit__btn {
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  color: #990011ff;
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  border-radius: 30px;
+  transition: font-size 0.3s ease-in-out;
+}
+
+.submit__btn:hover {
+  font-size: 1.5em;
 }

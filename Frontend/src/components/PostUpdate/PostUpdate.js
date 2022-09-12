@@ -4,13 +4,18 @@ import PostForm from "../PostForm/PostForm";
 import "./PostUpdate.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import JwtService from "../../services/JwtService";
 
 function PostUpdate() {
   const [postInfo, setPostInfo] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/posts/readOne/" + id).then((res) => {
+    axios({
+      method: "get",
+      url: `http://localhost:3001/api/posts/readOne/${id}`,
+      headers: { Authorization: "Bearer " + JwtService.getToken() },
+    }).then((res) => {
       setPostInfo(res.data.data);
     });
   }, [id]);

@@ -5,21 +5,29 @@ import LikeDislike from "../../components/LikeDislike/LikeDislike";
 import imagePost from "../../images/post-sans-image.jpg";
 import { Link } from "react-router-dom";
 import Delete from "../../components/Delete/Delete";
+import JwtService from "../../services/JwtService";
+import axios from "axios";
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [openPost, setOpenPost] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/posts/readAll")
-      .then((res) => res.json())
-      .then((result) => {
-        setPosts(result.data);
-      });
+    axios({
+      method: "get",
+      url: "http://localhost:3001/api/posts/readAll",
+      headers: { Authorization: "Bearer " + JwtService.getToken() },
+    }).then((res) => {
+      setPosts(res.data.data);
+    });
   }, []);
 
   const handleClick = () => {
     openPost ? setOpenPost(false) : setOpenPost(true);
+  };
+
+  const onPostDeleted = (newPostList) => {
+    setPosts(newPostList);
   };
 
   return (
@@ -55,7 +63,11 @@ function Home() {
                 </div>
                 <div className="icons__container">
                   <LikeDislike postId={post.id} _likes={post.likes} />
-                  <Delete postId={post.id} post={[post]} />
+                  <Delete
+                    postId={post.id}
+                    post={[post]}
+                    onPostDeleted={onPostDeleted}
+                  />
                   <Link to={"/modifier-article/" + post.id}>
                     <i className="fa-solid fa-pen-to-square modify__icon" />
                   </Link>

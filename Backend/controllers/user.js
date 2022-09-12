@@ -60,15 +60,41 @@ exports.login = (req, res, next) => {
       return res.status(502).json({ error });
     });
 };
-const test = (a, b, c, d) => {
-  console.log("@@@@@@@@ 1 @@@@@@@@ - ", a);
-  if (b) {
-    console.log("@@@@@@@@ 2 @@@@@@@@ - ", b);
+
+exports.getInfo = async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        id: req.auth.userId,
+      },
+      attributes: ["pseudo", "email"],
+    });
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(502).json({ error });
   }
-  if (c) {
-    console.log("@@@@@@@@ 3 @@@@@@@@ - ", b);
+};
+
+exports.modifyInfo = async (req, res, next) => {
+  const userId = req.auth.userId;
+  const user = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+  const userModified = {};
+  if (req.body.email) {
+    userModified.email = req.body.email;
+  } else if (req.body.pseudo) {
+    userModified.pseudo = req.body.pseudo;
+  } else if (req.body.password) {
+    userModified.password = req.body.password;
+  } else {
+    return res.status(403).json({ error: "Aucune informations à modifier" });
   }
-  if (d) {
-    console.log("@@@@@@@@ 4 @@@@@@@@ - ", b);
-  }
+
+  await user
+    .update(userModified)
+    .then(() => res.status(200).json({ message: "Données modifié!" }))
+    .catch((error) => res.status(401).json({ error }));
 };

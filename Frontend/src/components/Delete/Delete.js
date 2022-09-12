@@ -3,25 +3,28 @@ import { useEffect, useState } from "react";
 import "./Delete.css";
 import JwtService from "../../services/JwtService";
 
-const Delete = ({ postId, post }) => {
+const Delete = ({ postId, post, onPostDeleted }) => {
   const [deletePost, setDeletePost] = useState([]);
-  let postDeleted;
+  let newPostList;
 
   const handleDelete = () => {
-    const userId = JwtService.getTokenDecrypted().userId;
-    axios
-      .post(`http://localhost:3001/api/posts/${postId}`, { userId })
+    axios({
+      method: "post",
+      url: `http://localhost:3001/api/posts/${postId}`,
+      data: newPostList,
+      headers: { Authorization: "Bearer " + JwtService.getToken() },
+    })
       .then(() => {
         alert("Votre post à bien été supprimé !");
-        postDeleted = post.filter((item) => item.id !== postId);
-        window.location.reload();
+        newPostList = post.filter((item) => item.id !== postId);
+        onPostDeleted(newPostList);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    setDeletePost(postDeleted);
-  }, [postDeleted]);
+    setDeletePost(newPostList);
+  }, [newPostList]);
 
   return (
     <div>

@@ -3,6 +3,7 @@ import axios from "axios";
 import Thumb from "../Thumb/Thumb";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import JwtService from "../../services/JwtService";
 
 const PostForm = ({ postInfo }) => {
   const { id } = useParams();
@@ -28,7 +29,9 @@ const PostForm = ({ postInfo }) => {
           let formData = new FormData();
           formData.append("title", newPost.title);
           formData.append("description", newPost.description);
-          formData.append("image", newPost.file);
+          if (newPost.file) {
+            formData.append("image", newPost.file);
+          }
           let url = "";
           let notif = "";
           if (!id) {
@@ -39,7 +42,9 @@ const PostForm = ({ postInfo }) => {
             notif = "Votre post a bien été modifié !";
           }
           axios
-            .post(url, formData)
+            .post(url, formData, {
+              headers: { Authorization: "Bearer " + JwtService.getToken() },
+            })
             .then(function (response) {
               alert(notif);
               navigate("/accueil");
