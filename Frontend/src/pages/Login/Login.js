@@ -30,6 +30,7 @@ function Login() {
               .post("http://localhost:3001/api/auth/login", user)
               .then(function (response) {
                 JwtService.setToken(response.data.token);
+                localStorage.setItem("user", JSON.stringify(user));
                 navigate("/accueil");
                 setSubmitting(false);
               })

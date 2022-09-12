@@ -1,19 +1,29 @@
 import Header from "../../components/Header/Header";
 import "./Profile.css";
+import UserModif from "../../components/UserModif/UserModif";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const userInfo = localStorage.getItem("user");
+  const user = JSON.parse(userInfo);
+  const userEmail = user.email;
+  const userPseudo = user.pseudo;
+
+  const handleClick = () => {
+    navigate("/");
+    localStorage.clear(user);
+  };
+
   return (
     <div>
       <Header />
-      <div className="infos__container">
-        <div className="email__container">
-          <p className="email">email: </p>
-          <i className="fa-solid fa-pen-to-square modif__icon" />
-        </div>
-        <div className="pseudo__container">
-          <p className="pseudo">pseudo: </p>
-          <i className="fa-solid fa-pen-to-square modif__icon" />
-        </div>
+      <UserModif email={userEmail} pseudo={userPseudo} />
+      <div className="btn__container">
+        <button className="btn" onClick={handleClick}>
+          Se deconnecter
+        </button>
       </div>
     </div>
   );

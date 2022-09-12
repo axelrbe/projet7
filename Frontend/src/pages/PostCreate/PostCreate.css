@@ -10,24 +10,6 @@ body {
   flex-direction: column;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  color: #fff;
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-.input {
-  width: 500px;
-  padding: 10px;
-  border: 3px solid #990011ff;
-  border-radius: 15px;
-}
-
 .textarea {
   width: 400px;
   height: 400px;
@@ -42,19 +24,16 @@ body {
 
 .btn {
   border-radius: 15px;
-  border: 3px solid #101820ff;
   padding: 10px;
   background-color: #990011ff;
-  color: #ffd7d7;
+  color: #fff;
   font-size: 1.3em;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
-  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .btn:hover {
-  box-shadow: inset 600px 0 0 0 #101820ff;
-  color: white;
+  background-color: #111;
   border-radius: 15px;
 }
 

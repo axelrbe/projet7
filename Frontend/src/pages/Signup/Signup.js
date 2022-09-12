@@ -2,8 +2,10 @@ import "./Signup.css";
 import axios from "axios";
 import { Formik } from "formik";
 import LoginSignup from "../../components/LoginSignup/LoginSignup";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   return (
     <div>
       <LoginSignup />
@@ -29,6 +31,8 @@ function Signup() {
               .post("http://localhost:3001/api/auth/signup", user)
               .then(function (response) {
                 console.log(response);
+                alert("Votre compte a bien été créé !");
+                navigate("/accueil");
                 setSubmitting(false);
               })
               .catch(function (error) {
@@ -67,7 +71,7 @@ function Signup() {
               />
               {errors.password}
               <button className="btn" type="submit" disabled={isSubmitting}>
-                Se connecter
+                S'inscrire
               </button>
             </form>
           )}
