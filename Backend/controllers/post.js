@@ -89,7 +89,24 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.deletePost = async (req, res) => {};
+exports.deletePost = async (req, res) => {
+  const id = req.params.id;
+  const post = await Post.findOne({
+    where: { id },
+  });
+  // if (post.userId != req.auth.userId) {
+  //   res.status(401).json({ message: "Not authorized" });
+  // } else {
+  const imgUrl = post.imageUrl.split("/images/")[1];
+  fs.unlink(`images/${imgUrl}`, () => {
+    post
+      .destroy()
+      .then(() => {
+        res.status(200).json({ message: "Post supprimé !" });
+      })
+      .catch((error) => res.status(401).json({ error }));
+  });
+};
 
 exports.likePost = async (req, res, next) => {
   const userId = req.body.userId;
