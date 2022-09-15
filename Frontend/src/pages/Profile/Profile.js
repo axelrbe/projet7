@@ -1,15 +1,15 @@
 import Header from "../../components/Header/Header";
 import "./Profile.css";
 import UserModif from "../../components/UserModif/UserModif";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import JwtService from "../../services/JwtService";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -21,17 +21,22 @@ const Profile = () => {
     });
   }, []);
 
-  const handleClick = () => {
+  const handleLogout = () => {
     navigate("/");
+    localStorage.clear();
   };
 
   return (
     <div>
       <Header />
-      <UserModif email={user.email} pseudo={user.pseudo} />
-      <div className="btn__container">
-        <button className="btn" onClick={handleClick}>
-          Se deconnecter
+      <UserModif
+        email={user.email}
+        pseudo={user.pseudo}
+        password={user.password}
+      />
+      <div className="logout__container">
+        <button className="logout__btn" onClick={handleLogout}>
+          <i className="fa-solid fa-arrow-right-from-bracket" />
         </button>
       </div>
     </div>

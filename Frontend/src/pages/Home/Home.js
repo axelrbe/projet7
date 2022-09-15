@@ -75,7 +75,7 @@ function Home() {
                 {openPost && (
                   <div className={`open__post`}>
                     <h3>{post.title}</h3>
-                    <p>{post.description}</p>
+                    <p className="post__description">{post.description}</p>
                     {post.imageUrl ? (
                       <img src={post.imageUrl} alt={post.id} />
                     ) : (

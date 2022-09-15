@@ -1,19 +1,19 @@
 .infos__container {
   width: 100%;
-  height: 500px;
-  margin-top: 30px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  margin-bottom: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .email__container,
-.pseudo__container {
+.pseudo__container,
+.password__container {
   width: 50%;
   border: 3px solid #990011ff;
   border-radius: 15px;
@@ -31,14 +31,19 @@
 }
 
 .email__container:hover,
-.pseudo__container:hover {
+.pseudo__container:hover,
+.password__container:hover {
   background-color: #990011ff;
   color: #fff;
 }
 
 .email,
-.pseudo {
+.pseudo,
+.password {
   padding: 10px 30px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .usermodify__icon {
@@ -68,9 +73,14 @@
 }
 
 .input__form {
+  width: 100%;
   border: none;
   font-size: 1em;
   font-weight: bold;
+  text-decoration: none;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .input__form:focus {
@@ -81,21 +91,69 @@
   display: block;
 }
 
-.submit__btn {
-  position: absolute;
-  right: 15px;
-  bottom: 5px;
-  border: none;
-  background-color: transparent;
-  padding: 6px;
-  color: #990011ff;
+.confirm__container {
+  margin: 20px 0 15px 0;
   cursor: pointer;
-  font-size: 1.3em;
-  font-weight: bold;
-  border-radius: 30px;
-  transition: font-size 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  display: none;
+  position: relative;
 }
 
-.submit__btn:hover {
-  font-size: 1.5em;
+.confirm__container.input__active {
+  display: block;
+}
+
+.show__password {
+  position: absolute;
+  right: 0;
+  top: 11px;
+}
+
+.confirm {
+  border-radius: 15px;
+  color: #111;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.confirm:focus {
+  background-color: #eee;
+}
+
+.submit__btn {
+  background-color: transparent;
+  border: none;
+  padding: 0 10px 0 0;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #990011ff;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.error {
+  cursor: auto;
+  color: #990011ff;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 992px) {
+  .email__container,
+  .pseudo__container,
+  .password__container {
+    width: 80%;
+  }
+
+  .modify__area {
+    width: 60%;
+  }
 }

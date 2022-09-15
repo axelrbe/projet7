@@ -32,8 +32,7 @@ const Header = () => {
             <i className="fa-solid fa-list"></i>
           </button>
         )}
-        <ul className={`header__links ${isOpen ? "active" : ""}`}>
-          {/* <button className="closing__btn" onClick={openNav}></button> */}
+        <ul className={`header__links ${isOpen ? "links__active" : ""}`}>
           <li className="header__li">
             <Link to="/accueil" className="header__link">
               Accueil
@@ -41,7 +40,7 @@ const Header = () => {
           </li>
           <li className="header__li">
             <Link to="/ajout-article" className="header__link">
-              Ajouter un article
+              Ajouter
             </Link>
           </li>
           <li className="header__li">
