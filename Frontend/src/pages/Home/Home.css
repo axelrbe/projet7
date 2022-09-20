@@ -61,7 +61,6 @@
 .image__post {
   position: absolute;
   top: 0;
-  right: 0;
   left: 0;
   width: 100%;
   height: 150px;
@@ -96,7 +95,7 @@
 .modify__icon {
   position: absolute;
   top: 45%;
-  right: 5px;
+  right: 10px;
   font-size: 1.2em;
   color: #111;
   text-decoration: none;

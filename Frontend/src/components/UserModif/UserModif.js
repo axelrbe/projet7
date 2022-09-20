@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./UserModif.css";
 import JwtService from "../../services/JwtService";
 import axios from "axios";
@@ -9,20 +9,23 @@ const UserModif = ({ email, pseudo, password }) => {
   const [firstInput, setFirstInput] = useState(false);
   const [secondInput, setSecondInput] = useState(false);
   const [thirdInput, setThirdInput] = useState(false);
+  const [showFirstInput, setShowFirstInput] = useState(false);
+  const [showSecondInput, setShowSecondInput] = useState(false);
+  const [showThirdInput, setShowThirdInput] = useState(false);
   const [showFirstPassword, setShowFirstPassword] = useState(false);
   const [showSecondPassword, setShowSecondPassword] = useState(false);
   const [showThirdPassword, setShowThirdPassword] = useState(false);
 
-  const showFirstInput = () => {
-    firstInput ? setFirstInput(false) : setFirstInput(true);
+  const switchShowFirstInput = () => {
+    setShowFirstInput(!showFirstInput);
   };
 
-  const showSecondInput = () => {
-    secondInput ? setSecondInput(false) : setSecondInput(true);
+  const switchShowSecondInput = () => {
+    setShowSecondInput(!showSecondInput);
   };
 
-  const showThirdInput = () => {
-    thirdInput ? setThirdInput(false) : setThirdInput(true);
+  const switchShowThirdInput = () => {
+    setShowThirdInput(!showThirdInput);
   };
 
   const toggleFirstPassword = () => {
@@ -43,12 +46,37 @@ const UserModif = ({ email, pseudo, password }) => {
       : setShowThirdPassword(true);
   };
 
+  const updateUserInfo = (stateName, stateValue) => {
+    console.log(stateValue);
+    switch (stateName) {
+      case "email":
+        setFirstInput(stateValue.email);
+        setShowFirstInput(false);
+        break;
+      case "pseudo":
+        setSecondInput(stateValue.pseudo);
+        setShowSecondInput(false);
+        break;
+      case "password":
+        setThirdInput("");
+        setShowThirdInput(false);
+        break;
+      default:
+        console.log("erreur inconnue");
+    }
+  };
+
+  useEffect(() => {
+    setFirstInput(email);
+    setSecondInput(pseudo);
+  }, [email, pseudo]);
+
   return (
     <div>
       <div className="infos__container">
         <div className="email__container">
-          <p className="email">email: {email}</p>
-          <button className="usermodify__icon" onClick={showFirstInput}>
+          <p className="email">email: {firstInput}</p>
+          <button className="usermodify__icon" onClick={switchShowFirstInput}>
             <i className="fa-solid fa-pen-to-square" />
           </button>
         </div>
@@ -81,6 +109,7 @@ const UserModif = ({ email, pseudo, password }) => {
               })
                 .then(function (response) {
                   alert("Votre email à bien été modifié !");
+                  updateUserInfo("email", newEmail);
                   console.log(response);
                   setSubmitting(false);
                 })
@@ -93,7 +122,9 @@ const UserModif = ({ email, pseudo, password }) => {
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
             <form
-              className={`modify__area ${firstInput ? "input__active" : ""}`}
+              className={`modify__area ${
+                showFirstInput ? "input__active" : ""
+              }`}
               onSubmit={handleSubmit}
             >
               <input
@@ -128,8 +159,8 @@ const UserModif = ({ email, pseudo, password }) => {
           )}
         </Formik>
         <div className="pseudo__container">
-          <p className="pseudo">pseudo: {pseudo}</p>
-          <button className="usermodify__icon" onClick={showSecondInput}>
+          <p className="pseudo">pseudo: {secondInput}</p>
+          <button className="usermodify__icon" onClick={switchShowSecondInput}>
             <i className="fa-solid fa-pen-to-square" />
           </button>
         </div>
@@ -162,6 +193,7 @@ const UserModif = ({ email, pseudo, password }) => {
               })
                 .then(function (response) {
                   alert("Votre pseudo à bien été modifié !");
+                  updateUserInfo("pseudo", newPseudo);
                   console.log(response);
                   setSubmitting(false);
                 })
@@ -174,7 +206,9 @@ const UserModif = ({ email, pseudo, password }) => {
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
             <form
-              className={`modify__area ${secondInput ? "input__active" : ""}`}
+              className={`modify__area ${
+                showSecondInput ? "input__active" : ""
+              }`}
               onSubmit={handleSubmit}
             >
               <input
@@ -210,7 +244,7 @@ const UserModif = ({ email, pseudo, password }) => {
         </Formik>
         <div className="pseudo__container">
           <p className="pseudo">Modifiez votre mot de passe ?</p>
-          <button className="usermodify__icon" onClick={showThirdInput}>
+          <button className="usermodify__icon" onClick={switchShowThirdInput}>
             <i className="fa-solid fa-pen-to-square" />
           </button>
         </div>
@@ -227,8 +261,9 @@ const UserModif = ({ email, pseudo, password }) => {
             return errors;
           }}
           onSubmit={(newPassword, { setSubmitting }) => {
+            console.log(newPassword, password);
             const cryptedPassword = bcrypt.compareSync(
-              newPassword.password,
+              newPassword.confirmPassword,
               password
             );
             if (!cryptedPassword) {
@@ -243,6 +278,7 @@ const UserModif = ({ email, pseudo, password }) => {
               })
                 .then(function (response) {
                   alert("Votre mot de passe à bien été modifié !");
+                  updateUserInfo("password", "");
                   console.log(response);
                   setSubmitting(false);
                 })
@@ -255,8 +291,11 @@ const UserModif = ({ email, pseudo, password }) => {
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
             <form
-              className={`modify__area ${thirdInput ? "input__active" : ""}`}
+              className={`modify__area ${
+                showThirdInput ? "input__active" : ""
+              }`}
               onSubmit={handleSubmit}
+              key={thirdInput}
             >
               <input
                 className="input__form"

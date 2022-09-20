@@ -38,6 +38,7 @@ const PostForm = ({ postInfo }) => {
           if (!id) {
             url = "http://localhost:3001/api/posts/";
             notif = "Votre post a bien été ajouté !";
+            formData.append("userId", JwtService.getTokenDecrypted().userId);
           } else {
             url = `http://localhost:3001/api/posts/update/${id}`;
             notif = "Votre post a bien été modifié !";

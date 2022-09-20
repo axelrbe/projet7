@@ -8,13 +8,11 @@ import Delete from "../../components/Delete/Delete";
 import JwtService from "../../services/JwtService";
 import axios from "axios";
 
-// Rafraichir quand on delete un post
-// Problème quand on ouvre un post
-// Form s'envoie pas si texte trop long
-
 function Home() {
   const [posts, setPosts] = useState([]);
-  const [openPost, setOpenPost] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const { userId, isAdmin } = JwtService.getTokenDecrypted();
 
   useEffect(() => {
     axios({
@@ -26,57 +24,67 @@ function Home() {
     });
   }, []);
 
-  const handleClick = () => {
-    openPost ? setOpenPost(false) : setOpenPost(true);
+  const handleClick = (i) => {
+    setSelectedIndex(i);
   };
 
-  const onPostDeleted = (newPostList) => {
-    setPosts(newPostList);
+  const onPostDeleted = (index) => {
+    const posts_ = [...posts];
+    posts_.splice(index, 1);
+    setPosts(posts_);
   };
 
   return (
-    <div className={`"main" ${openPost ? "main__noscroll" : ""}`}>
-      <div className={openPost ? "active" : ""}></div>
+    <div className={`"main" ${selectedIndex ? "main__noscroll" : ""}`}>
+      <div className={selectedIndex ? "active" : ""}></div>
       <Header />
       <div className="Home">
         <div className="title__container">
           <h1 className="title">Liste des posts !</h1>
         </div>
         <ul className="nav__ul">
-          {posts.map((post) => {
+          {posts.map((post, index) => {
             return (
               <li key={post.id} className="nav__li">
                 {post.imageUrl ? (
                   <img
                     src={post.imageUrl}
                     alt={post.id}
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick(index);
+                    }}
                     className="image__post"
                   />
                 ) : (
                   <img
                     src={imagePost}
                     alt={post.id}
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick(index);
+                    }}
                     className="image__post"
                   />
                 )}
                 <div className="post">
                   <h3 className="posts__title">{post.title} :</h3>
                   <p className="posts__description">{post.description}</p>
-                  <Link to={"/modifier-article/" + post.id}>
-                    <i className="fa-solid fa-pen-to-square modify__icon" />
-                  </Link>
+                  {(post.userId === userId || isAdmin === 1) && (
+                    <Link to={"/modifier-article/" + post.id}>
+                      <i className="fa-solid fa-pen-to-square modify__icon" />
+                    </Link>
+                  )}
                 </div>
                 <div>
                   <LikeDislike postId={post.id} _likes={post.likes} />
-                  <Delete
-                    postId={post.id}
-                    post={[post]}
-                    onPostDeleted={onPostDeleted}
-                  />
+                  {(post.userId === userId || isAdmin === 1) && (
+                    <Delete
+                      postId={post.id}
+                      index={index}
+                      onPostDeleted={onPostDeleted}
+                    />
+                  )}
                 </div>
-                {openPost && (
+                {selectedIndex === index && (
                   <div className={`open__post`}>
                     <h3 className="post__title">{post.title}</h3>
                     <p className="post__description">{post.description}</p>
@@ -85,7 +93,12 @@ function Home() {
                     ) : (
                       <img src={imagePost} alt={post.id} />
                     )}
-                    <button className="close__btn" onClick={handleClick}>
+                    <button
+                      className="close__btn"
+                      onClick={() => {
+                        handleClick(null);
+                      }}
+                    >
                       X
                     </button>
                   </div>

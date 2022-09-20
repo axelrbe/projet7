@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "helmet": "^6.0.0"
+  },
+  "devDependencies": {
+    "sequelize-mock": "^0.10.2"
   }
 }

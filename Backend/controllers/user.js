@@ -8,11 +8,18 @@ exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
-      User.create({
+      const newUser = {
         email: req.body.email,
         password: hash,
         pseudo: req.body.pseudo,
-      })
+      };
+      if (
+        req.body.email === "admin@groupomania.fr" &&
+        req.body.password === "mdpadmin"
+      ) {
+        newUser.isAdmin = 1;
+      }
+      User.create(newUser)
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
         .catch((error) => res.status(400).json({ error }));
     })
@@ -44,7 +51,10 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             token: jwt.sign(
-              { userId: user[0].dataValues.id },
+              {
+                userId: user[0].dataValues.id,
+                isAdmin: user[0].dataValues.isAdmin,
+              },
               process.env.JWT_SECRET,
               {
                 expiresIn: "24h",

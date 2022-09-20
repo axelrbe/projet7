@@ -14,6 +14,7 @@ exports.createPost = (req, res, next) => {
     title: req.body.title,
     description: req.body.description,
     imageUrl: imagePost,
+    userId: req.body.userId,
   })
     .then(() => {
       res.status(201).json({ message: "post enregistré !" });
@@ -34,6 +35,7 @@ exports.readAll = async (req, res) => {
         "imageUrl",
         "createdAt",
         "updatedAt",
+        "userId",
       ],
     });
     return res.status(200).json({ data: posts });
@@ -69,22 +71,23 @@ exports.update = async (req, res) => {
   const post = await Post.findOne({
     where: { id },
   });
-  // if (post.userId != req.auth.userId) {
-  //   res.status(401).json({ message: "Not authorized" });
-  // } else
-  if (req.file && post.imageUrl) {
-    const imgUrl = post.imageUrl.split("/images/")[1];
-    fs.unlink(`images/${imgUrl}`, () => {
+  if (post.userId != req.auth.userId && !req.auth.isAdmin) {
+    res.status(401).json({ message: "Not authorized" });
+  } else {
+    if (req.file && post.imageUrl) {
+      const imgUrl = post.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${imgUrl}`, () => {
+        post
+          .update(postModified)
+          .then(() => res.status(200).json({ message: "Post modifié!" }))
+          .catch((error) => res.status(401).json({ error }));
+      });
+    } else {
       post
         .update(postModified)
         .then(() => res.status(200).json({ message: "Post modifié!" }))
         .catch((error) => res.status(401).json({ error }));
-    });
-  } else {
-    post
-      .update(postModified)
-      .then(() => res.status(200).json({ message: "Post modifié!" }))
-      .catch((error) => res.status(401).json({ error }));
+    }
   }
 };
 
@@ -93,18 +96,19 @@ exports.deletePost = async (req, res) => {
   const post = await Post.findOne({
     where: { id },
   });
-  // if (post.userId != req.auth.userId) {
-  //   res.status(401).json({ message: "Not authorized" });
-  // } else {
-  const imgUrl = post.imageUrl.split("/images/")[1];
-  fs.unlink(`images/${imgUrl}`, () => {
-    post
-      .destroy()
-      .then(() => {
-        res.status(200).json({ message: "Post supprimé !" });
-      })
-      .catch((error) => res.status(401).json({ error }));
-  });
+  if (post.userId != req.auth.userId && !req.auth.isAdmin) {
+    res.status(401).json({ message: "Not authorized" });
+  } else {
+    const imgUrl = post.imageUrl.split("/images/")[1];
+    fs.unlink(`images/${imgUrl}`, () => {
+      post
+        .destroy()
+        .then(() => {
+          res.status(200).json({ message: "Post supprimé !" });
+        })
+        .catch((error) => res.status(401).json({ error }));
+    });
+  }
 };
 
 exports.likePost = async (req, res, next) => {
