@@ -7,7 +7,7 @@ const postRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
 const path = require("path");
 const cors = require("cors");
-// const helmet = require('helmet');
+const helmet = require("helmet");
 
 const app = express();
 
@@ -32,6 +32,12 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: "cross-origin",
+    contentSecurityPolicy: false,
+  })
+);
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);

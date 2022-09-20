@@ -8,7 +8,7 @@ function PostCreate() {
       <Header />
       <div className="PostCreate">
         <div className="title__container">
-          <h1 className="title">Créez votre propre post !</h1>
+          <h1 className="title">Créez votre post !</h1>
         </div>
         <PostForm postInfo={{}} />
       </div>

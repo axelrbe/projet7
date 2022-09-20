@@ -8,6 +8,10 @@ import Delete from "../../components/Delete/Delete";
 import JwtService from "../../services/JwtService";
 import axios from "axios";
 
+// Rafraichir quand on delete un post
+// Problème quand on ouvre un post
+// Form s'envoie pas si texte trop long
+
 function Home() {
   const [posts, setPosts] = useState([]);
   const [openPost, setOpenPost] = useState(false);
@@ -58,23 +62,23 @@ function Home() {
                   />
                 )}
                 <div className="post">
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
+                  <h3 className="posts__title">{post.title} :</h3>
+                  <p className="posts__description">{post.description}</p>
+                  <Link to={"/modifier-article/" + post.id}>
+                    <i className="fa-solid fa-pen-to-square modify__icon" />
+                  </Link>
                 </div>
-                <div className="icons__container">
+                <div>
                   <LikeDislike postId={post.id} _likes={post.likes} />
                   <Delete
                     postId={post.id}
                     post={[post]}
                     onPostDeleted={onPostDeleted}
                   />
-                  <Link to={"/modifier-article/" + post.id}>
-                    <i className="fa-solid fa-pen-to-square modify__icon" />
-                  </Link>
                 </div>
                 {openPost && (
                   <div className={`open__post`}>
-                    <h3>{post.title}</h3>
+                    <h3 className="post__title">{post.title}</h3>
                     <p className="post__description">{post.description}</p>
                     {post.imageUrl ? (
                       <img src={post.imageUrl} alt={post.id} />

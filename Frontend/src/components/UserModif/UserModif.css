@@ -75,7 +75,7 @@
 .input__form {
   width: 100%;
   border: none;
-  font-size: 1em;
+  font-size: 1.3em;
   font-weight: bold;
   text-decoration: none;
   white-space: normal;
@@ -83,7 +83,11 @@
   text-overflow: ellipsis;
 }
 
-.input__form:focus {
+.input__form,
+.input__form:hover,
+.input__form:focus,
+.input__form:active {
+  box-shadow: 0 0 0 30px white inset;
   outline: none;
 }
 
@@ -92,7 +96,7 @@
 }
 
 .confirm__container {
-  margin: 20px 0 15px 0;
+  margin: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   display: none;
@@ -103,18 +107,12 @@
   display: block;
 }
 
-.show__password {
-  position: absolute;
-  right: 0;
-  top: 11px;
-}
-
 .confirm {
   border-radius: 15px;
   color: #111;
   font-size: 1.2em;
   font-weight: bold;
-  width: 100%;
+  width: 85%;
   border: none;
   background-color: transparent;
   padding: 10px;
@@ -123,8 +121,21 @@
   text-overflow: ellipsis;
 }
 
-.confirm:focus {
-  background-color: #eee;
+.confirm,
+.confirm:hover,
+.confirm:focus,
+.confirm:active {
+  box-shadow: 0 0 0 30px white inset;
+  outline: none;
+}
+
+.show__password {
+  cursor: pointer;
+  color: #990011ff;
+  font-size: 1.1em;
+  position: absolute;
+  right: 0;
+  top: 11px;
 }
 
 .submit__btn {

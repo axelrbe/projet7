@@ -4,13 +4,14 @@ import Thumb from "../Thumb/Thumb";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import JwtService from "../../services/JwtService";
+import "./PostForm.css";
 
 const PostForm = ({ postInfo }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="form__container">
       <Formik
         initialValues={{
           description: postInfo.description || "",
@@ -69,24 +70,28 @@ const PostForm = ({ postInfo }) => {
           isSubmitting,
           setFieldValue,
         }) => (
-          <form className="form" onSubmit={handleSubmit}>
+          <form className="form__post" onSubmit={handleSubmit}>
             <input
-              className="input"
+              className="post__input"
               placeholder="Ecrivez un titre ici..."
               type="text"
               name="title"
               onChange={handleChange}
               value={values.title}
             />
-            {errors.title}
+            <span className="errors">{errors.title}</span>
             <textarea
-              className="textarea"
+              className="post__textarea"
               placeholder="Ecrivez votre commentaire ici..."
               name="description"
+              maxLength="350"
               onChange={handleChange}
               value={values.description}
             ></textarea>
-            {errors.description}
+            <span className="errors">{errors.description}</span>
+            <label htmlFor="file" className="post__label">
+              Ajoutez une image...
+            </label>
             <input
               id="file"
               name="file"

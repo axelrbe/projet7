@@ -13,8 +13,12 @@ const LikeDislike = ({ postId, _likes }) => {
 
   const likePost = () => {
     const userId = JwtService.getTokenDecrypted().userId;
-    axios
-      .post(`http://localhost:3001/api/posts/like/${postId}`, { userId })
+    axios({
+      method: "post",
+      url: `http://localhost:3001/api/posts/like/${postId}`,
+      data: { userId },
+      headers: { Authorization: "Bearer " + JwtService.getToken() },
+    })
       .then((res) => {
         if (res.data.action === "added") {
           setLikeActive(true);
@@ -29,7 +33,6 @@ const LikeDislike = ({ postId, _likes }) => {
 
   return (
     <div className="btns__container">
-      <div></div>
       <button
         className={`like__btn ${likeActive ? "likeIsActive" : ""}`}
         onClick={likePost}

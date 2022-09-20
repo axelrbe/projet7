@@ -11,7 +11,7 @@ function Signup() {
       <LoginSignup />
       <div className="Signup">
         <div className="title__container">
-          <h1>Connectez-vous !</h1>
+          <h1 className="title">Connectez-vous !</h1>
         </div>
         <Formik
           initialValues={{ email: "", password: "", pseudo: "" }}
@@ -42,34 +42,34 @@ function Signup() {
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form__user" onSubmit={handleSubmit}>
               <input
-                className="input"
+                className="user__input"
                 placeholder="Créer votre pseudo ici..."
                 type="text"
                 name="pseudo"
                 onChange={handleChange}
                 value={values.pseudo}
               />
-              {errors.pseudo}
+              <span className="errors">{errors.pseudo}</span>
               <input
-                className="input"
+                className="user__input"
                 placeholder="Renseigner votre email ici..."
                 type="email"
                 name="email"
                 onChange={handleChange}
                 value={values.email}
               />
-              {errors.email}
+              <span className="errors">{errors.email}</span>
               <input
-                className="input"
+                className="user__input"
                 placeholder="Renseigner votre mot de passe ici..."
                 type="password"
                 name="password"
                 onChange={handleChange}
                 value={values.password}
               />
-              {errors.password}
+              <span className="errors">{errors.password}</span>
               <button className="btn" type="submit" disabled={isSubmitting}>
                 S'inscrire
               </button>

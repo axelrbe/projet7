@@ -109,17 +109,17 @@ const UserModif = ({ email, pseudo, password }) => {
                   values.email.length >= 1 ? "input__active" : ""
                 }`}
               >
-                <span className="show__password" onClick={toggleFirstPassword}>
-                  <i className="fa-solid fa-eye" />
-                </span>
                 <input
                   className="confirm"
-                  placeholder="Confirmer votre mot de passe"
+                  placeholder="Confirmer votre mot de passe..."
                   type={showFirstPassword ? "text" : "password"}
                   name="password"
                   onChange={handleChange}
                   value={values.password}
                 />
+                <span className="show__password" onClick={toggleFirstPassword}>
+                  <i className="fa-solid fa-eye" />
+                </span>
               </div>
               <button type="submit" className="submit__btn">
                 <i className="fa-solid fa-paper-plane" />
@@ -195,7 +195,7 @@ const UserModif = ({ email, pseudo, password }) => {
                 </span>
                 <input
                   className="confirm"
-                  placeholder="Confirmer votre mot de passe"
+                  placeholder="Confirmer votre mot de passe..."
                   type={showSecondPassword ? "text" : "password"}
                   name="password"
                   onChange={handleChange}
@@ -276,7 +276,7 @@ const UserModif = ({ email, pseudo, password }) => {
                 </span>
                 <input
                   className="confirm"
-                  placeholder="Confirmer votre mot de passe"
+                  placeholder="Confirmer votre mot de passe..."
                   type={showThirdPassword ? "text" : "password"}
                   name="confirmPassword"
                   onChange={handleChange}

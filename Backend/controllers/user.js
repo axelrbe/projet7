@@ -67,7 +67,7 @@ exports.getInfo = async (req, res, next) => {
       where: {
         id: req.auth.userId,
       },
-      attributes: ["pseudo", "email"],
+      attributes: ["pseudo", "email", "password"],
     });
     return res.status(200).json({ user });
   } catch (error) {

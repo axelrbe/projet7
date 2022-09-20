@@ -1,3 +1,5 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "helmet": "^6.0.0"
+  }
 }
