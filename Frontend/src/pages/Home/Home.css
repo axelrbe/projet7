@@ -92,6 +92,18 @@
   text-overflow: ellipsis;
 }
 
+.user__pseudo {
+  position: absolute;
+  left: 30px;
+  top: 70%;
+}
+
+.posts__createdAt {
+  position: absolute;
+  left: 30px;
+  top: 75%;
+}
+
 .modify__icon {
   position: absolute;
   top: 45%;

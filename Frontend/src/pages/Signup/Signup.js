@@ -3,6 +3,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import LoginSignup from "../../components/LoginSignup/LoginSignup";
 import { useNavigate } from "react-router-dom";
+import JwtService from "../../services/JwtService";
 
 function Signup() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function Signup() {
               .then(function (response) {
                 console.log(response);
                 alert("Votre compte a bien été créé !");
+                JwtService.setToken(response.data.token);
                 navigate("/accueil");
                 setSubmitting(false);
               })

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import JwtService from "../../services/JwtService";
 import "./PostForm.css";
 
+// Form gère la création et la modification
 const PostForm = ({ postInfo }) => {
   const { id } = useParams();
   const navigate = useNavigate();

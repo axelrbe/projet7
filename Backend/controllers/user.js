@@ -13,14 +13,23 @@ exports.signup = (req, res, next) => {
         password: hash,
         pseudo: req.body.pseudo,
       };
-      if (
-        req.body.email === "admin@groupomania.fr" &&
-        req.body.password === "mdpadmin"
-      ) {
-        newUser.isAdmin = 1;
-      }
       User.create(newUser)
-        .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+        .then((data) => {
+          const user = data.dataValues;
+          return res.status(201).json({
+            message: "Utilisateur créé !",
+            token: jwt.sign(
+              {
+                userId: user.id,
+                isAdmin: user.isAdmin,
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: "24h",
+              }
+            ),
+          });
+        })
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => {

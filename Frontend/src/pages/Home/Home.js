@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Delete from "../../components/Delete/Delete";
 import JwtService from "../../services/JwtService";
 import axios from "axios";
+import { formatDate } from "../../services/Utils";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -20,6 +21,7 @@ function Home() {
       url: "http://localhost:3001/api/posts/readAll",
       headers: { Authorization: "Bearer " + JwtService.getToken() },
     }).then((res) => {
+      console.log(res.data.data);
       setPosts(res.data.data);
     });
   }, []);
@@ -68,6 +70,10 @@ function Home() {
                 <div className="post">
                   <h3 className="posts__title">{post.title} :</h3>
                   <p className="posts__description">{post.description}</p>
+                  <p className="user__pseudo">Posté par: {post.user.pseudo}</p>
+                  <p className="posts__createdAt">
+                    Posté le: {formatDate(post.createdAt)}
+                  </p>
                   {(post.userId === userId || isAdmin === 1) && (
                     <Link to={"/modifier-article/" + post.id}>
                       <i className="fa-solid fa-pen-to-square modify__icon" />

@@ -7,7 +7,7 @@ const LoginSignup = () => {
   const [checkWidth, setCheckWidth] = useState(window.innerWidth);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
+  const setWidth = () => {
     setCheckWidth(window.innerWidth);
   };
 
@@ -16,10 +16,10 @@ const LoginSignup = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleClick);
+    window.addEventListener("resize", setWidth);
 
     return () => {
-      window.removeEventListener("resize", handleClick);
+      window.removeEventListener("resize", setWidth);
     };
   }, []);
 

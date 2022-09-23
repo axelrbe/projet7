@@ -18,17 +18,17 @@ db.users = require("./user.js")(sequelize, Sequelize);
 db.posts = require("./post.js")(sequelize, Sequelize);
 db.postLikes = require("./postLike.js")(sequelize, Sequelize);
 
-db.users.hasOne(db.posts, {
+db.posts.belongsTo(db.users, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
 
-db.posts.hasOne(db.postLikes, {
+db.postLikes.belongsTo(db.posts, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
 
-db.users.hasOne(db.postLikes, {
+db.postLikes.belongsTo(db.users, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });

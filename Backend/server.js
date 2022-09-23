@@ -2,6 +2,7 @@ const http = require("http");
 require("dotenv").config();
 const app = require("./app");
 
+// Connexion au port 3001
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
@@ -16,6 +17,7 @@ const normalizePort = (val) => {
 const port = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
 
+// fonction qui gère les erreurs automatiquement
 const errorHandler = (error) => {
   if (error.syscall !== "listen") {
     throw error;
@@ -37,8 +39,10 @@ const errorHandler = (error) => {
   }
 };
 
+//Créer un objet HTTP server pour lire les port de l'ordinateur
 const server = http.createServer(app);
 
+// Ecouteur d'évenement consignant le port sur lequel le serveur s'écoute
 server.on("error", errorHandler);
 server.on("listening", () => {
   const address = server.address();

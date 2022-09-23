@@ -9,6 +9,7 @@ const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
 
+// Appeller express pour gérer les routes
 const app = express();
 
 const corsOptions = {
@@ -18,6 +19,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+//Utilise les headers pour permettre les requetes cross-origin
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -31,7 +33,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Bodyparser nous sert a lire les données envoyées lors des requetes de type post
 app.use(bodyParser.json());
+
+// Helmet pour augmenter la sécurité du site
 app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin",

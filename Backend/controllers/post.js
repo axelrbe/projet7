@@ -2,6 +2,7 @@ const db = require("../models");
 const Post = db.posts;
 const Op = db.Sequelize.Op;
 const fs = require("fs");
+const User = db.users;
 
 exports.createPost = (req, res, next) => {
   let imagePost = "";
@@ -10,6 +11,7 @@ exports.createPost = (req, res, next) => {
       req.file.filename
     }`;
   }
+  console.log(req.body.userId);
   Post.create({
     title: req.body.title,
     description: req.body.description,
@@ -37,9 +39,26 @@ exports.readAll = async (req, res) => {
         "updatedAt",
         "userId",
       ],
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "id",
+              "email",
+              "password",
+              "createdAt",
+              "updatedAt",
+              "isAdmin",
+            ],
+          },
+        },
+      ],
     });
     return res.status(200).json({ data: posts });
   } catch (err) {
+    console.log(err);
     return res.status(501).json({ err });
   }
 };
