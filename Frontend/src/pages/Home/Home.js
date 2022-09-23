@@ -70,10 +70,6 @@ function Home() {
                 <div className="post">
                   <h3 className="posts__title">{post.title} :</h3>
                   <p className="posts__description">{post.description}</p>
-                  <p className="user__pseudo">Posté par: {post.user.pseudo}</p>
-                  <p className="posts__createdAt">
-                    Posté le: {formatDate(post.createdAt)}
-                  </p>
                   {(post.userId === userId || isAdmin === 1) && (
                     <Link to={"/modifier-article/" + post.id}>
                       <i className="fa-solid fa-pen-to-square modify__icon" />
@@ -92,6 +88,12 @@ function Home() {
                 </div>
                 {selectedIndex === index && (
                   <div className={`open__post`}>
+                    <p className="user__pseudo">
+                      Posté par: {post.user.pseudo}
+                    </p>
+                    <p className="posts__createdAt">
+                      Posté le: {formatDate(post.createdAt)}
+                    </p>
                     <h3 className="post__title">{post.title}</h3>
                     <p className="post__description">{post.description}</p>
                     {post.imageUrl ? (

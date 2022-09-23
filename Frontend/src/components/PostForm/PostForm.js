@@ -78,6 +78,7 @@ const PostForm = ({ postInfo }) => {
               placeholder="Ecrivez un titre ici..."
               type="text"
               name="title"
+              maxLength="50"
               onChange={handleChange}
               value={values.title}
             />
