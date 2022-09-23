@@ -70,6 +70,7 @@
 }
 
 .posts__title {
+  width: 88%;
   border-bottom: 4px solid #990011ff;
   padding-bottom: 10px;
   font-size: 1.8em;
