@@ -96,24 +96,44 @@ exports.getInfo = async (req, res, next) => {
 
 exports.modifyInfo = async (req, res, next) => {
   const userId = req.auth.userId;
-  const user = await User.findOne({
-    where: {
-      id: userId,
-    },
-  });
-  const userModified = {};
-  if (req.body.email) {
-    userModified.email = req.body.email;
-  } else if (req.body.pseudo) {
-    userModified.pseudo = req.body.pseudo;
-  } else if (req.body.password) {
-    userModified.password = req.body.password;
-  } else {
-    return res.status(403).json({ error: "Aucune informations à modifier" });
-  }
+  const password = req.body.password;
+  try {
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ err: "aucun utilisateur trouvé" });
+    }
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      return res.status(401).json({ message: "Mot de passe incorrect !" });
+    }
+    const userModified = {};
+    if (req.body.email) {
+      userModified.email = req.body.email;
+    } else if (req.body.pseudo) {
+      userModified.pseudo = req.body.pseudo;
+    } else if (req.body.newPassword) {
+      const hash = await bcrypt.hash(req.body.newPassword, 10);
+      userModified.password = hash;
+    } else {
+      return res.status(403).json({ error: "Aucune information à modifier" });
+    }
 
-  await user
-    .update(userModified)
-    .then(() => res.status(200).json({ message: "Données modifié!" }))
-    .catch((error) => res.status(401).json({ error }));
+    user
+      .update(userModified)
+      .then(() => res.status(200).json({ message: "Données modifiées !" }))
+      .catch((error) =>
+        res
+          .status(401)
+          .json({ message: "Erreur lors de la modification des données" })
+      );
+  } catch (err) {
+    console.log("@@@@Update user error@@@@", err);
+    return res
+      .status(500)
+      .json({ message: "Une erreur inconnue est survenue" });
+  }
 };

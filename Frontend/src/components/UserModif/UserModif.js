@@ -3,9 +3,8 @@ import "./UserModif.css";
 import JwtService from "../../services/JwtService";
 import axios from "axios";
 import { Formik } from "formik";
-import bcrypt from "bcryptjs";
 
-const UserModif = ({ email, pseudo, password }) => {
+const UserModif = ({ email, pseudo }) => {
   const [firstInput, setFirstInput] = useState(false);
   const [secondInput, setSecondInput] = useState(false);
   const [thirdInput, setThirdInput] = useState(false);
@@ -93,31 +92,25 @@ const UserModif = ({ email, pseudo, password }) => {
             return errors;
           }}
           onSubmit={(newEmail, { setSubmitting }) => {
-            const cryptedPassword = bcrypt.compareSync(
-              newEmail.password,
-              password
-            );
-            if (!cryptedPassword) {
-              alert("Mot de passe incorrect !");
-              return;
-            } else {
-              axios({
-                method: "post",
-                url: "http://localhost:3001/api/auth/modifyInfo/",
-                data: newEmail,
-                headers: { Authorization: "Bearer " + JwtService.getToken() },
+            axios({
+              method: "post",
+              url: "http://localhost:3001/api/auth/modifyInfo/",
+              data: newEmail,
+              headers: { Authorization: "Bearer " + JwtService.getToken() },
+            })
+              .then(function (response) {
+                alert("Votre email à bien été modifié !");
+                updateUserInfo("email", newEmail);
+                newEmail.email = "";
+                newEmail.password = "";
+                console.log(response);
+                setSubmitting(false);
               })
-                .then(function (response) {
-                  alert("Votre email à bien été modifié !");
-                  updateUserInfo("email", newEmail);
-                  console.log(response);
-                  setSubmitting(false);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                  setSubmitting(false);
-                });
-            }
+              .catch(function (error) {
+                alert(error.response.data.message);
+                console.log(error);
+                setSubmitting(false);
+              });
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -177,31 +170,25 @@ const UserModif = ({ email, pseudo, password }) => {
             return errors;
           }}
           onSubmit={(newPseudo, { setSubmitting }) => {
-            const cryptedPassword = bcrypt.compareSync(
-              newPseudo.password,
-              password
-            );
-            if (!cryptedPassword) {
-              alert("Mot de passe incorrect !");
-              return;
-            } else {
-              axios({
-                method: "post",
-                url: "http://localhost:3001/api/auth/modifyInfo/",
-                data: newPseudo,
-                headers: { Authorization: "Bearer " + JwtService.getToken() },
+            axios({
+              method: "post",
+              url: "http://localhost:3001/api/auth/modifyInfo/",
+              data: newPseudo,
+              headers: { Authorization: "Bearer " + JwtService.getToken() },
+            })
+              .then(function (response) {
+                alert("Votre pseudo à bien été modifié !");
+                updateUserInfo("pseudo", newPseudo);
+                newPseudo.pseudo = "";
+                newPseudo.password = "";
+                console.log(response);
+                setSubmitting(false);
               })
-                .then(function (response) {
-                  alert("Votre pseudo à bien été modifié !");
-                  updateUserInfo("pseudo", newPseudo);
-                  console.log(response);
-                  setSubmitting(false);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                  setSubmitting(false);
-                });
-            }
+              .catch(function (error) {
+                alert(error.response.data.message);
+                console.log(error);
+                setSubmitting(false);
+              });
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -250,43 +237,36 @@ const UserModif = ({ email, pseudo, password }) => {
         </div>
         <Formik
           initialValues={{
+            newPassword: "",
             password: "",
-            confirmPassword: "",
           }}
           validate={(values) => {
             const errors = {};
-            if (!values.password) {
-              errors.password = "Champ requis";
+            if (!values.newPassword) {
+              errors.newPassword = "Champ requis";
             }
             return errors;
           }}
-          onSubmit={(newPassword, { setSubmitting }) => {
-            console.log(newPassword, password);
-            const cryptedPassword = bcrypt.compareSync(
-              newPassword.confirmPassword,
-              password
-            );
-            if (!cryptedPassword) {
-              alert("Mot de passe incorrect !");
-              return;
-            } else {
-              axios({
-                method: "post",
-                url: "http://localhost:3001/api/auth/modifyInfo/",
-                data: newPassword,
-                headers: { Authorization: "Bearer " + JwtService.getToken() },
+          onSubmit={(_newPassword, { setSubmitting }) => {
+            axios({
+              method: "post",
+              url: "http://localhost:3001/api/auth/modifyInfo/",
+              data: _newPassword,
+              headers: { Authorization: "Bearer " + JwtService.getToken() },
+            })
+              .then(function (response) {
+                alert("Votre mot de passe à bien été modifié !");
+                updateUserInfo("password", "");
+                _newPassword.newPassword = "";
+                _newPassword.password = "";
+                console.log(response);
+                setSubmitting(false);
               })
-                .then(function (response) {
-                  alert("Votre mot de passe à bien été modifié !");
-                  updateUserInfo("password", "");
-                  console.log(response);
-                  setSubmitting(false);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                  setSubmitting(false);
-                });
-            }
+              .catch(function (error) {
+                alert(error.response.data.message);
+                console.log(error);
+                setSubmitting(false);
+              });
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -300,14 +280,15 @@ const UserModif = ({ email, pseudo, password }) => {
               <input
                 className="input__form"
                 placeholder="Modifiez votre mot de passe..."
-                name="password"
+                type="password"
+                name="newPassword"
                 onChange={handleChange}
-                value={values.password}
+                value={values.newPassword}
               />
-              <span className="error">{errors.password}</span>
+              <span className="error">{errors.newPassword}</span>
               <div
                 className={`confirm__container ${
-                  values.password.length >= 1 ? "input__active" : ""
+                  values.newPassword.length >= 1 ? "input__active" : ""
                 }`}
               >
                 <span className="show__password" onClick={toggleThirdPassword}>
@@ -317,9 +298,9 @@ const UserModif = ({ email, pseudo, password }) => {
                   className="confirm"
                   placeholder="Confirmer votre mot de passe..."
                   type={showThirdPassword ? "text" : "password"}
-                  name="confirmPassword"
+                  name="password"
                   onChange={handleChange}
-                  value={values.confirmPassword}
+                  value={values.password}
                 />
               </div>
               <button type="submit" className="submit__btn">

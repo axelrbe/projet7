@@ -22,10 +22,10 @@ const LikeDislike = ({ postId, _likes }) => {
       .then((res) => {
         if (res.data.action === "added") {
           setLikeActive(true);
-          setLikes(likes + 1);
+          setLikes(res.data.likes);
         } else {
           setLikeActive(false);
-          setLikes(likes - 1);
+          setLikes(res.data.likes);
         }
       })
       .catch((err) => err.response.data);

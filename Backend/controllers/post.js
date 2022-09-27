@@ -163,5 +163,5 @@ exports.likePost = async (req, res, next) => {
       },
     }
   );
-  return res.status(200).json({ message, action });
+  return res.status(200).json({ message, action, likes });
 };

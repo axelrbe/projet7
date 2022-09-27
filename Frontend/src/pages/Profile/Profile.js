@@ -29,11 +29,7 @@ const Profile = () => {
   return (
     <div>
       <Header />
-      <UserModif
-        email={user.email}
-        pseudo={user.pseudo}
-        password={user.password}
-      />
+      <UserModif email={user.email} pseudo={user.pseudo} />
       <div className="logout__container">
         <button className="logout__btn" onClick={handleLogout}>
           <i className="fa-solid fa-arrow-right-from-bracket" />
